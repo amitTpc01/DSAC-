@@ -62,7 +62,7 @@ public:
         return front == nullptr;
     }
     
-    // Display queue contents
+    // Display queue contents//
     void display() const {
         Node* temp = front;
         while (temp != nullptr) {
