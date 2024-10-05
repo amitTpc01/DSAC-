@@ -1,85 +1,50 @@
 #include <iostream>
+using namespace std;
 
 class Stack {
-private:
-    struct Node {
-        int data;
-        Node* next;
-        
-        Node(int val) : data(val), next(nullptr) {}
-    };
-    
-    Node* top;
+    int arr[100]; // Array to hold stack elements
+    int topIndex; // Index of the top element
 
 public:
-    // Constructor
-    Stack() : top(nullptr) {}
-    
-    // Destructor
-    ~Stack() {
-        while (!isEmpty()) {
-            pop();
+    Stack() {
+        topIndex = -1; // Initialize stack as empty
+    }
+
+    void push(int x) {
+        if (topIndex >= 99) {
+            cout << "Stack Overflow" << endl;
+        } else {
+            arr[++topIndex] = x;
         }
     }
-    
-    // Push function
-    void push(int value) {
-        Node* newNode = new Node(value);
-        newNode->next = top;
-        top = newNode;
-    }
-    
-    // Pop function
+
     void pop() {
-        if (isEmpty()) {
-            std::cerr << "Stack is empty!" << std::endl;
-            return;
+        if (topIndex == -1) {
+            cout << "Stack Underflow" << endl;
+        } else {
+            topIndex--;
         }
-        Node* temp = top;
-        top = top->next;
-        delete temp;
     }
-    
-    // Peek function
-    int peek() const {
-        if (isEmpty()) {
-            std::cerr << "Stack is empty!" << std::endl;
+
+    int top() {
+        if (topIndex == -1) {
+            cout << "Stack is Empty" << endl;
             return -1;
         }
-        return top->data;
+        return arr[topIndex];
     }
-    
-    // Check if stack is empty
-    bool isEmpty() const {
-        return top == nullptr;
-    }
-    
-    // Display stack contents
-    void display() const {
-        Node* temp = top;
-        while (temp != nullptr) {
-            std::cout << temp->data << " -> ";
-            temp = temp->next;
-        }
-        std::cout << "nullptr" << std::endl;
+
+    bool isEmpty() {
+        return topIndex == -1;
     }
 };
 
 int main() {
-    Stack stack;
-    
-    stack.push(10);
-    stack.push(20);
-    stack.push(30);
-    
-    std::cout << "Stack: ";
-    stack.display();
-    
-    std::cout << "Top element: " << stack.peek() << std::endl;
-    
-    stack.pop();
-    std::cout << "Stack after pop: ";
-    stack.display();
-    
+    Stack s;
+    s.push(10);
+    s.push(20);
+    cout << "Top element: " << s.top() << endl;
+    s.pop();
+    cout << "Top element after pop: " << s.top() << endl;
     return 0;
 }
